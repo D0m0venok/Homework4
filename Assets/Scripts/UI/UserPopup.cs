@@ -145,7 +145,7 @@ namespace Homework4
         }
         private void TweenScale(Transform goTransform, Action onComplete)
         {
-            goTransform.DOScale(0f, _duration * 0.5f).SetLoops(2, LoopType.Yoyo).
+            goTransform.DOScale(_startScale, _duration * 0.5f).SetLoops(2, LoopType.Yoyo).
                 OnStepComplete(() => onComplete?.Invoke());
         }
     }

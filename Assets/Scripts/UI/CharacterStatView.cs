@@ -14,7 +14,7 @@ namespace Homework4
         public void Init(string stateName, string value)
         {
             _nameText.text = stateName + ": ";
-            UpdateValue(value);
+            _valueText.text = value;
         }
         public void UpdateValue(string value)
         {
