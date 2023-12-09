@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Homework4
 {
-    public sealed class UserPopup : MonoBehaviour
+    public sealed class UserPopup : MonoBehaviour, IInitializable
     {
         [SerializeField] private Text _nameText;
         [SerializeField] private Text _descriptionText;
@@ -18,20 +18,22 @@ namespace Homework4
         [SerializeField] private Text _levelText;
         [SerializeField] private Button _levelUpButton;
         [SerializeField] private Button _closeButton;
+        [Space]
+        [SerializeField] private CharacterStatView _characterStatView;
+        [SerializeField] private Transform _activeContainer;
+        [SerializeField] private Transform _disableContainer;
 
         private IPresenter _presenter;
-        private StatPool _statPool;
-        private readonly Dictionary<CharacterStat, CharacterStatView> _characterStats = new();
-        private readonly Dictionary<CharacterStat, IDisposable> _disposableStats = new();
+        private StatViewPool _statPool;
+        private readonly Dictionary<ICharacterStatPM, CharacterStatView> _characterStats = new();
         private readonly CompositeDisposable _disposable = new ();
         private readonly float _duration = 0.3f;
         private readonly Vector3 _startScale = Vector3.zero;
         private readonly Vector3 _endScale = Vector3.one;
-
-        [Inject]
-        public void Construct(StatPool statPool)
+        
+        public void Initialize()
         {
-            _statPool = statPool;
+            _statPool = new StatViewPool(_characterStatView, _activeContainer, _disableContainer);
             gameObject.SetActive(false);
         }
         public void Show(object args)
@@ -74,14 +76,13 @@ namespace Homework4
                 gameObject.SetActive(false);
                 transform.localScale = _endScale;
             });
-            
-            foreach (var disposable in _disposableStats)
-            {
-                disposable.Value.Dispose();
-            }
 
+            foreach (var statView in _characterStats.Values)
+            {
+                statView.Dispose();
+            }
+            
             _disposable.Clear();
-            _disposableStats.Clear();
             _characterStats.Clear();
             _presenter.Hide();
         }
@@ -112,19 +113,17 @@ namespace Homework4
             _levelSliderView.CurrentExperienceUpdate(experience);
             LevelButtonUpdate();
         }
-        private void AddState(CharacterStat stat)
+        private void AddState(ICharacterStatPM stat)
         {
             var statView = _statPool.Get();
-            statView.Init(stat.Name, stat.Value.ToString());
-            var disposable = stat.Value.SkipLatestValueOnSubscribe().
-                Subscribe(i => statView.UpdateValue(i.ToString()));
-            _disposableStats.Add(stat, disposable);
+            statView.Init(stat);
             _characterStats.Add(stat, statView);
         }
-        private void RemoveState(CharacterStat stat)
+        private void RemoveState(ICharacterStatPM stat)
         {
-            _statPool.Put(_characterStats[stat]);
-            _disposableStats[stat].Dispose();
+            var view = _characterStats[stat];
+            view.Dispose();
+            _statPool.Put(view);
             _characterStats.Remove(stat);
         }
         private void LevelButtonUpdate()

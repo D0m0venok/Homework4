@@ -24,7 +24,7 @@ namespace Homework4
             _userPopup = userPopup;
         }
         
-        private void Awake()
+        private void Start()
         {
             Show();
         }
@@ -36,6 +36,9 @@ namespace Homework4
 
         public void Show()
         {
+            if(_userPopup.gameObject.activeSelf)
+                return;
+            
             _userInfo = new UserInfo();
             _playerLevel = new PlayerLevel();
             _characterInfo = new CharacterInfo();

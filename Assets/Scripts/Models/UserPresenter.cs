@@ -13,7 +13,7 @@ namespace Homework4
         private readonly ReactiveProperty<Sprite> _icon = new();
         private readonly StringReactiveProperty _currentLevel = new();
         private readonly IntReactiveProperty _currentExperience = new();
-         private readonly ReactiveCollection<CharacterStat> _stats = new();
+         private readonly ReactiveCollection<ICharacterStatPM> _stats = new();
 
         public IReadOnlyReactiveProperty<string> Name => _name;
         public IReadOnlyReactiveProperty<string> Description => _description;
@@ -21,7 +21,7 @@ namespace Homework4
         public IReadOnlyReactiveProperty<string> CurrentLevel => _currentLevel;
         public IReadOnlyReactiveProperty<int> CurrentExperience => _currentExperience;
         public int RequiredExperience => _playerLevel.RequiredExperience;
-        public IReadOnlyReactiveCollection<CharacterStat> Stats => _stats;
+        public IReadOnlyReactiveCollection<ICharacterStatPM> Stats => _stats;
         public bool CanLevelUp => _playerLevel.CanLevelUp();
         
         public UserPresenter(UserInfo userInfo, PlayerLevel playerLevel, CharacterInfo characterInfo)
@@ -69,11 +69,11 @@ namespace Homework4
         {
             _currentExperience.Value = experience;
         }
-        private void OnCharacterStatAdded(CharacterStat stat)
+        private void OnCharacterStatAdded(ICharacterStatPM stat)
         {
             _stats.Add(stat);
         }
-        private void OnCharacterStatRemoved(CharacterStat stat)
+        private void OnCharacterStatRemoved(ICharacterStatPM stat)
         {
             _stats.Remove(stat);
         }

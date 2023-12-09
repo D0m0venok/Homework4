@@ -11,7 +11,7 @@ namespace Homework4
         public IReadOnlyReactiveProperty<string> CurrentLevel { get; }
         public IReadOnlyReactiveProperty<int> CurrentExperience { get; }
         public int RequiredExperience { get; }
-        public IReadOnlyReactiveCollection<CharacterStat> Stats { get; }
+        public IReadOnlyReactiveCollection<ICharacterStatPM> Stats { get; }
         public bool CanLevelUp { get; }
         public void Hide();
         public void LevelUp();

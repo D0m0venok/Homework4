@@ -310,6 +310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 171511329}
   - component: {fileID: 171511330}
+  - component: {fileID: 171511331}
   m_Layer: 0
   m_Name: '[UI]'
   m_TagString: Untagged
@@ -351,6 +352,19 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 954d79ad0f5124da59b33552ab47a641, type: 3}
   - {fileID: 21300000, guid: 7c0892898786946a98a1057c9873611a, type: 3}
   - {fileID: 21300000, guid: a564258f7260e47d58e9ee37e2a3abb7, type: 3}
+--- !u!114 &171511331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171511328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef3ea00ee06f4ee1aad8a81f589b8ab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _userPopup: {fileID: 1343995446}
 --- !u!1 &217048136
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,10 +839,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _popupShower: {fileID: 171511330}
-  _userPopup: {fileID: 1343995446}
-  _characterStatView: {fileID: 4276092417260224742, guid: ea7fc62a96e35fd49ad8788b23a72555, type: 3}
-  _activeContainer: {fileID: 1571754281}
-  _disableContainer: {fileID: 2004282754}
 --- !u!114 &550659336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -844,6 +854,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 550659335}
+  - {fileID: 171511331}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -1416,6 +1427,9 @@ MonoBehaviour:
   _levelText: {fileID: 1437326781}
   _levelUpButton: {fileID: 1381759562}
   _closeButton: {fileID: 277611803}
+  _characterStatView: {fileID: 4276092417260224742, guid: ea7fc62a96e35fd49ad8788b23a72555, type: 3}
+  _activeContainer: {fileID: 1571754281}
+  _disableContainer: {fileID: 2004282754}
 --- !u!1 &1354695496
 GameObject:
   m_ObjectHideFlags: 0
