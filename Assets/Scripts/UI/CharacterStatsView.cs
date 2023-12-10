@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Extensions;
 using UniRx;
 using UnityEngine;
 
@@ -47,13 +48,14 @@ namespace Homework4
             var statView = _statPool.Get();
             statView.Init(stat);
             _characterStats.Add(stat, statView);
+            TL.Play(TLNames.ScaleOne, statView.gameObject);
         }
         private void RemoveState(ICharacterStatPM stat)
         {
             var view = _characterStats[stat];
             view.Dispose();
-            _statPool.Put(view);
             _characterStats.Remove(stat);
+            TL.Play(TLNames.ScaleZero, view.gameObject).OnComplete(() => _statPool.Put(view));
         }
     }
 }
