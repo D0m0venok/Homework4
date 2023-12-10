@@ -16,9 +16,6 @@ namespace Homework4
 
         private IUserPresenter _presenter;
         private IDisposable _disposable;
-        private readonly float _duration = 0.3f;
-        private readonly Vector3 _startScale = Vector3.zero;
-        private readonly Vector3 _endScale = Vector3.one;
 
         public void Initialize()
         {
@@ -39,16 +36,11 @@ namespace Homework4
             
             _disposable = _closeButton.OnClickAsObservable().Subscribe(_ => Hide());
             TL.Play(TLNames.ScaleOne, gameObject);
-            //transform.DOScale(_endScale, _duration).ChangeStartValue(_startScale);
             gameObject.SetActive(true);
         }
         private void Hide()
         {
-            TL.Play(TLNames.ScaleZero, gameObject).OnComplete(() =>
-            {
-                gameObject.SetActive(false);
-                transform.localScale = _endScale;
-            });
+            TL.Play(TLNames.ScaleZero, gameObject).OnComplete(() => gameObject.SetActive(false));
             
             _characterInfoView.Dispose();
             _characterStatsView.Dispose();
