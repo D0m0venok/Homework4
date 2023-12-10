@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using Extensions;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,8 +11,7 @@ namespace Homework4
     {
         [SerializeField] private Text _nameText;
         [SerializeField] private Text _valueText;
-
-        private readonly float _duration = 0.2f;
+        
         private IDisposable _disposable;
 
         public void Init(ICharacterStatPM stat)
@@ -29,8 +29,9 @@ namespace Homework4
         
         private void UpdateValue(string value)
         {
-            _valueText.transform.DOScale(0f, _duration * 0.5f).SetLoops(2, LoopType.Yoyo).
-                OnStepComplete(() => _valueText.text = value);
+            var tween = TL.Get(TLNames.ScaleZero);
+            _valueText.transform.DOScale((Vector3)tween.To, tween.GetTime() * 0.5f).SetLoops(2, LoopType.Yoyo)
+                .SetEase(tween.Ease).OnStepComplete(() => _valueText.text = value);
         }
     }
 }

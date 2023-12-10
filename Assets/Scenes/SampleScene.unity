@@ -1357,8 +1357,8 @@ RectTransform:
   - {fileID: 277611802}
   - {fileID: 1354695497}
   - {fileID: 1076112104}
-  - {fileID: 1540568535}
   - {fileID: 1680112806}
+  - {fileID: 1540568535}
   - {fileID: 1571754281}
   - {fileID: 2004282754}
   - {fileID: 1381759561}
@@ -1420,16 +1420,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb5f26c1f044f008074232dbf4a3254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameText: {fileID: 833452204}
-  _descriptionText: {fileID: 1680112807}
-  _iconImage: {fileID: 119715605}
-  _levelSliderView: {fileID: 1540568539}
-  _levelText: {fileID: 1437326781}
-  _levelUpButton: {fileID: 1381759562}
+  _characterInfoView:
+    _nameText: {fileID: 833452204}
+    _descriptionText: {fileID: 1680112807}
+    _iconImage: {fileID: 119715605}
+    _levelSliderView:
+      _sliderFillImage: {fileID: 2023571928}
+      _requiredExperienceText: {fileID: 1778650627}
+      _currentExperienceText: {fileID: 991719337}
+    _levelText: {fileID: 1437326781}
+    _levelUpButton: {fileID: 1381759562}
+  _characterStatsView:
+    _characterStatView: {fileID: 4276092417260224742, guid: ea7fc62a96e35fd49ad8788b23a72555, type: 3}
+    _activeContainer: {fileID: 1571754281}
+    _disableContainer: {fileID: 2004282754}
   _closeButton: {fileID: 277611803}
-  _characterStatView: {fileID: 4276092417260224742, guid: ea7fc62a96e35fd49ad8788b23a72555, type: 3}
-  _activeContainer: {fileID: 1571754281}
-  _disableContainer: {fileID: 2004282754}
 --- !u!1 &1354695496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1721,7 +1726,6 @@ GameObject:
   - component: {fileID: 1540568535}
   - component: {fileID: 1540568537}
   - component: {fileID: 1540568536}
-  - component: {fileID: 1540568539}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -1744,7 +1748,7 @@ RectTransform:
   - {fileID: 2023571927}
   - {fileID: 437110497}
   m_Father: {fileID: 1343995443}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -1789,21 +1793,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1540568534}
   m_CullTransparentMesh: 1
---- !u!114 &1540568539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1540568534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc6036193e574118873b28de8ea62d2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _slider: {fileID: 2023571928}
-  _requiredExperienceText: {fileID: 1778650627}
-  _currentExperienceText: {fileID: 991719337}
 --- !u!1 &1571754280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1997,7 +1986,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1343995443}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}

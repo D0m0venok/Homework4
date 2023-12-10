@@ -1,32 +1,37 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
+using Extensions;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Homework4
 {
-    public class LevelSliderView : MonoBehaviour
+    [Serializable]
+    public class LevelSliderView
     {
-        [SerializeField] private Image _slider;
+        [SerializeField] private Image _sliderFillImage;
         [SerializeField] private Text _requiredExperienceText;
         [SerializeField] private Text _currentExperienceText;
-
-        private readonly float _duration = 0.3f;
+        
         private float _requiredExperience;
         private int _currentExperience;
 
         public void RequireExperienceUpdate(int experience)
         {
+            var tween = TL.Get(TLNames.ValueChanged);
             var exp = (int)_requiredExperience;
-            DOTween.To(() => exp, RequiredSetter, experience, _duration);
+            DOTween.To(() => exp, RequiredSetter, experience, tween.GetTime()).SetEase(tween.Ease);
             _requiredExperience = experience;
         }
         public void CurrentExperienceUpdate(int experience)
         {
+            var tween = TL.Get(TLNames.ValueChanged);
             var exp = _currentExperience;
-            DOTween.To(() => exp, CurrentSetter, experience, _duration);
+            DOTween.To(() => exp, CurrentSetter, experience, tween.GetTime()).SetEase(tween.Ease);
             
             var endValue = experience > 0 ? experience / _requiredExperience : 0;
-            DOTween.To(() => _slider.fillAmount, value => _slider.fillAmount = value, endValue, _duration);
+            DOTween.To(() => _sliderFillImage.fillAmount, value => _sliderFillImage.fillAmount = value, endValue, tween.GetTime())
+                .SetEase(tween.Ease);
             _currentExperience = experience;
         }
         

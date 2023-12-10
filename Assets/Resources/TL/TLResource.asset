@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0fa27b1409c1ce42a0f89aec8d00f6f, type: 3}
+  m_Name: TLResource
+  m_EditorClassIdentifier: 
+  _elements:
+  - _foldout: 0
+    _name: Text
+    _isGeneric: 1
+    _actionType: 0
+    _tweenType: 1
+    _fromFloat: 0
+    _fromVector: {x: 0, y: 0, z: 0}
+    _fromColor: {r: 1, g: 1, b: 1, a: 1}
+    _toFloat: 0
+    _toVector: {x: 0, y: 0, z: 0}
+    _toColor: {r: 1, g: 1, b: 1, a: 1}
+    _time: 0.3
+    _useRandomTime: 0
+    _minTime: 0.5
+    _maxTime: 1
+    _ease: 1
+    _isRelative: 0
+    _resetOnComplete: 0
+  - _foldout: 1
+    _name: ScaleOne
+    _isGeneric: 0
+    _actionType: 2
+    _tweenType: 2
+    _fromFloat: 0
+    _fromVector: {x: 0, y: 0, z: 0}
+    _fromColor: {r: 1, g: 1, b: 1, a: 1}
+    _toFloat: 0
+    _toVector: {x: 1, y: 1, z: 1}
+    _toColor: {r: 1, g: 1, b: 1, a: 1}
+    _time: 0.2
+    _useRandomTime: 0
+    _minTime: 0.5
+    _maxTime: 1
+    _ease: 1
+    _isRelative: 0
+    _resetOnComplete: 0
+  - _foldout: 1
+    _name: ScaleZero
+    _isGeneric: 0
+    _actionType: 2
+    _tweenType: 1
+    _fromFloat: 0
+    _fromVector: {x: 1, y: 1, z: 1}
+    _fromColor: {r: 1, g: 1, b: 1, a: 1}
+    _toFloat: 0
+    _toVector: {x: 0, y: 0, z: 0}
+    _toColor: {r: 1, g: 1, b: 1, a: 1}
+    _time: 0.2
+    _useRandomTime: 0
+    _minTime: 0.5
+    _maxTime: 1
+    _ease: 1
+    _isRelative: 0
+    _resetOnComplete: 1
+  - _foldout: 1
+    _name: ValueChanged
+    _isGeneric: 1
+    _actionType: 0
+    _tweenType: 1
+    _fromFloat: 0
+    _fromVector: {x: 0, y: 0, z: 0}
+    _fromColor: {r: 1, g: 1, b: 1, a: 1}
+    _toFloat: 0
+    _toVector: {x: 0, y: 0, z: 0}
+    _toColor: {r: 1, g: 1, b: 1, a: 1}
+    _time: 0.3
+    _useRandomTime: 0
+    _minTime: 0.5
+    _maxTime: 1
+    _ease: 6
+    _isRelative: 0
+    _resetOnComplete: 0

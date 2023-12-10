@@ -1,19 +1,10 @@
-using UniRx;
-using UnityEngine;
-
-namespace Homework4
+﻿namespace Homework4
 {
-    public interface IPresenter
+    public interface IUserPresenter
     {
-        public IReadOnlyReactiveProperty<string> Name { get; }
-        public IReadOnlyReactiveProperty<string> Description { get; }
-        public IReadOnlyReactiveProperty<Sprite> Icon { get; }
-        public IReadOnlyReactiveProperty<string> CurrentLevel { get; }
-        public IReadOnlyReactiveProperty<int> CurrentExperience { get; }
-        public int RequiredExperience { get; }
-        public IReadOnlyReactiveCollection<ICharacterStatPM> Stats { get; }
-        public bool CanLevelUp { get; }
-        public void Hide();
-        public void LevelUp();
+        public ICharacterInfoPresenter InfoPresenter { get; }
+        public ICharacterStatsPresenter StatsPresenter { get; }
+
+        public void Dispose();
     }
 }

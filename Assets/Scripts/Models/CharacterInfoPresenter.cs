@@ -1,10 +1,9 @@
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Homework4
 {
-    public sealed class UserPresenter : IPresenter
+    public sealed class CharacterInfoPresenter : ICharacterInfoPresenter
     {
         private readonly PlayerLevel _playerLevel;
         private readonly CompositeDisposable _disposable = new ();
@@ -13,7 +12,6 @@ namespace Homework4
         private readonly ReactiveProperty<Sprite> _icon = new();
         private readonly StringReactiveProperty _currentLevel = new();
         private readonly IntReactiveProperty _currentExperience = new();
-         private readonly ReactiveCollection<ICharacterStatPM> _stats = new();
 
         public IReadOnlyReactiveProperty<string> Name => _name;
         public IReadOnlyReactiveProperty<string> Description => _description;
@@ -21,10 +19,9 @@ namespace Homework4
         public IReadOnlyReactiveProperty<string> CurrentLevel => _currentLevel;
         public IReadOnlyReactiveProperty<int> CurrentExperience => _currentExperience;
         public int RequiredExperience => _playerLevel.RequiredExperience;
-        public IReadOnlyReactiveCollection<ICharacterStatPM> Stats => _stats;
         public bool CanLevelUp => _playerLevel.CanLevelUp();
         
-        public UserPresenter(UserInfo userInfo, PlayerLevel playerLevel, CharacterInfo characterInfo)
+        public CharacterInfoPresenter(UserInfo userInfo, PlayerLevel playerLevel)
         {
             _playerLevel = playerLevel;
 
@@ -34,13 +31,9 @@ namespace Homework4
             
             _playerLevel.CurrentLevel.Subscribe(OnLevelUp).AddTo(_disposable);
             _playerLevel.CurrentExperience.Subscribe(OnExperienceChanged).AddTo(_disposable);
-            
-            _stats.AddRange(characterInfo.Stats);
-            characterInfo.Stats.ObserveAdd().Subscribe(action => OnCharacterStatAdded(action.Value)).AddTo(_disposable);
-            characterInfo.Stats.ObserveRemove().Subscribe(action => OnCharacterStatRemoved(action.Value)).AddTo(_disposable);
         }
         
-        public void Hide()
+        public void Dispose()
         {
             _disposable.Dispose();
         }
@@ -68,14 +61,6 @@ namespace Homework4
         private void OnExperienceChanged(int experience)
         {
             _currentExperience.Value = experience;
-        }
-        private void OnCharacterStatAdded(ICharacterStatPM stat)
-        {
-            _stats.Add(stat);
-        }
-        private void OnCharacterStatRemoved(ICharacterStatPM stat)
-        {
-            _stats.Remove(stat);
         }
     }
 }

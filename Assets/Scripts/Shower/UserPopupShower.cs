@@ -11,7 +11,7 @@ namespace Homework4
         [SerializeField] private Sprite[] _sprites;
         
         private UserPopup _userPopup;
-        private IPresenter _userPresenter;
+        private IUserPresenter _userPresenter;
         private UserPresenterFactory _factory;
         private UserInfo _userInfo;
         private PlayerLevel _playerLevel;
