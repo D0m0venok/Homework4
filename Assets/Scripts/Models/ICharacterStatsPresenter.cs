@@ -4,7 +4,7 @@ namespace Homework4
 {
     public interface ICharacterStatsPresenter
     {
-        public IReadOnlyReactiveCollection<ICharacterStatPM> Stats { get; }
+        public IReadOnlyReactiveDictionary<CharacterStat, ICharacterStatPM> Stats { get; }
         
         public void Dispose();
     }

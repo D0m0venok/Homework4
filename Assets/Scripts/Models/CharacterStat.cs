@@ -1,13 +1,14 @@
-using UniRx;
+using System;
 
 namespace Homework4
 {
-    public sealed class CharacterStat : ICharacterStatPM
+    public sealed class CharacterStat
     {
-        private readonly ReactiveProperty<int> _value = new();
+        public event Action<int> OnValueChanged; 
         
         public string Name { get; private set; }
-        public IReadOnlyReactiveProperty<int> Value => _value;
+        public int Value { get; private set; }
+
 
         public CharacterStat(string name)
         {
@@ -15,7 +16,8 @@ namespace Homework4
         }
         public void ChangeValue(int value)
         {
-            _value.Value = value;
+            Value = value;
+            OnValueChanged?.Invoke(value);
         }
     }
 }

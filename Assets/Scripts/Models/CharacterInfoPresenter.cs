@@ -5,8 +5,8 @@ namespace Homework4
 {
     public sealed class CharacterInfoPresenter : ICharacterInfoPresenter
     {
+        private readonly UserInfo _userInfo;
         private readonly PlayerLevel _playerLevel;
-        private readonly CompositeDisposable _disposable = new ();
         private readonly StringReactiveProperty _name = new();
         private readonly StringReactiveProperty _description = new();
         private readonly ReactiveProperty<Sprite> _icon = new();
@@ -23,19 +23,32 @@ namespace Homework4
         
         public CharacterInfoPresenter(UserInfo userInfo, PlayerLevel playerLevel)
         {
+            _userInfo = userInfo;
             _playerLevel = playerLevel;
-
-            userInfo.Name.Subscribe(OnChangeName).AddTo(_disposable);
-            userInfo.Description.Subscribe(OnChangeDescription).AddTo(_disposable);
-            userInfo.Icon.Subscribe(OnChangeIcon).AddTo(_disposable);
             
-            _playerLevel.CurrentLevel.Subscribe(OnLevelUp).AddTo(_disposable);
-            _playerLevel.CurrentExperience.Subscribe(OnExperienceChanged).AddTo(_disposable);
+            _userInfo.OnNameChanged += OnChangeName;
+            _name.Value = _userInfo.Name;
+            
+            _userInfo.OnDescriptionChanged += OnChangeDescription;
+            _description.Value = _userInfo.Description;
+            
+            _userInfo.OnIconChanged += OnChangeIcon;
+            _icon.Value = _userInfo.Icon;
+            
+            _playerLevel.OnLevelUp += OnLevelUp;
+            _currentLevel.Value = _playerLevel.CurrentLevel.ToString();
+            
+            _playerLevel.OnExperienceChanged += OnExperienceChanged;
+            _currentExperience.Value = _playerLevel.CurrentExperience;
         }
         
         public void Dispose()
         {
-            _disposable.Dispose();
+            _userInfo.OnNameChanged -= OnChangeName;
+            _userInfo.OnDescriptionChanged -= OnChangeDescription;
+            _userInfo.OnIconChanged -= OnChangeIcon;
+            _playerLevel.OnLevelUp -= OnLevelUp;
+            _playerLevel.OnExperienceChanged -= OnExperienceChanged;
         }
         public void LevelUp()
         {
@@ -54,9 +67,10 @@ namespace Homework4
         {
             _icon.Value = sprite;
         }
-        private void OnLevelUp(int level)
+        private void OnLevelUp()
         {
-            _currentLevel.Value = level.ToString();
+            _currentLevel.Value = _playerLevel.CurrentLevel.ToString();
+            OnExperienceChanged(_playerLevel.CurrentExperience);
         }
         private void OnExperienceChanged(int experience)
         {

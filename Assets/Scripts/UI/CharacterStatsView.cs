@@ -21,13 +21,13 @@ namespace Homework4
         {
             _statPool = new StatViewPool(_characterStatView, _activeContainer, _disableContainer);
         }
-        public void Set(ICharacterStatsPresenter presenter)
+        public void Show(ICharacterStatsPresenter presenter)
         {
             presenter.Stats.ObserveAdd().Subscribe(action => AddState(action.Value)).AddTo(_disposable); 
             presenter.Stats.ObserveRemove().Subscribe(action => RemoveState(action.Value)).AddTo(_disposable);
-            foreach (var stat in presenter.Stats)
+            foreach (var pair in presenter.Stats)
             {
-                AddState(stat);
+                AddState(pair.Value);
             }
         }
         public void Dispose()

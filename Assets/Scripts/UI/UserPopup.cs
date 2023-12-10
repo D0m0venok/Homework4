@@ -31,8 +31,8 @@ namespace Homework4
                 throw new Exception("Expected IProductPresenter");
 
             _presenter = presenter;
-            _characterInfoView.Set(presenter.InfoPresenter);
-            _characterStatsView.Set(presenter.StatsPresenter);
+            _characterInfoView.Show(presenter.InfoPresenter);
+            _characterStatsView.Show(presenter.StatsPresenter);
             
             _disposable = _closeButton.OnClickAsObservable().Subscribe(_ => Hide());
             TL.Play(TLNames.ScaleOne, gameObject);

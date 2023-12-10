@@ -5,46 +5,43 @@ namespace Homework4
 {
     public sealed class CharacterStatsPresenter : ICharacterStatsPresenter
     {
-        private readonly CompositeDisposable _disposable = new ();
-        private readonly ReactiveCollection<ICharacterStatPM> _stats = new();
+        private readonly CharacterInfo _characterInfo;
+        private readonly ReactiveDictionary<CharacterStat, ICharacterStatPM> _stats = new();
 
-        public IReadOnlyReactiveCollection<ICharacterStatPM> Stats => _stats;
+        public IReadOnlyReactiveDictionary<CharacterStat, ICharacterStatPM> Stats => _stats;
 
         public CharacterStatsPresenter(CharacterInfo characterInfo)
         {
-            _stats.AddRange(characterInfo.Stats);
-            characterInfo.Stats.ObserveAdd().Subscribe(action => OnCharacterStatAdded(action.Value)).AddTo(_disposable);
-            characterInfo.Stats.ObserveRemove().Subscribe(action => OnCharacterStatRemoved(action.Value)).AddTo(_disposable);
+            _characterInfo = characterInfo;
+            foreach (var stat in _characterInfo.GetStats())
+            {
+                _stats.Add(stat, new CharacterStatPM(stat));
+            }
+
+            _characterInfo.OnStatAdded += OnCharacterStatAdded;
+            _characterInfo.OnStatRemoved += OnCharacterStatRemoved;
         }
         public void Dispose()
         {
-            _disposable.Dispose();
+            _characterInfo.OnStatAdded -= OnCharacterStatAdded;
+            _characterInfo.OnStatRemoved -= OnCharacterStatRemoved;
+            foreach (var statPm in _stats.Values)   
+            {
+                statPm.Dispose();
+            }
         }
         
-        private void OnCharacterStatAdded(ICharacterStatPM stat)
+        private void OnCharacterStatAdded(CharacterStat stat)
         {
-            _stats.Add(stat);
+            _stats.Add(stat, new CharacterStatPM(stat));
         }
-        private void OnCharacterStatRemoved(ICharacterStatPM stat)
+        private void OnCharacterStatRemoved(CharacterStat stat)
         {
+            if(!_stats.TryGetValue(stat, out var statPm))
+                return;
+            
+            statPm.Dispose();
             _stats.Remove(stat);
-        }
-    }
-
-    public sealed class UserPresenter : IUserPresenter
-    {
-        public ICharacterInfoPresenter InfoPresenter { get; }
-        public ICharacterStatsPresenter StatsPresenter { get; }
-
-        public UserPresenter(ICharacterInfoPresenter infoPresenter, ICharacterStatsPresenter statsPresenter)
-        {
-            InfoPresenter = infoPresenter;
-            StatsPresenter = statsPresenter;
-        }
-        public void Dispose()
-        {
-            InfoPresenter.Dispose();
-            StatsPresenter.Dispose();
         }
     }
 }

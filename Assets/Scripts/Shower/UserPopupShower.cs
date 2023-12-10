@@ -82,19 +82,21 @@ namespace Homework4
         }
         public void RemoveStat()
         {
-            if(_characterInfo.Stats.Count == 0)
+            var stats = _characterInfo.GetStats();
+            if(stats.Length == 0)
                 return;
             
-            var stat = _characterInfo.Stats[GetRandomInt(0, _characterInfo.Stats.Count)];
+            var stat = stats[GetRandomInt(0, stats.Length)];
             _characterInfo.RemoveStat(stat);
         }
         public void ChangeRandomStat()
         {
-            if(_characterInfo.Stats.Count == 0)
+            var stats = _characterInfo.GetStats();
+            if(stats.Length == 0)
                 return;
             
-            var stat = _characterInfo.Stats[GetRandomInt(0, _characterInfo.Stats.Count)];
-            stat.ChangeValue(stat.Value.Value + GetRandomInt(1, 5));
+            var stat = stats[GetRandomInt(0, stats.Length)];
+            stat.ChangeValue(stat.Value + GetRandomInt(1, 5));
         }
 
         private Sprite GetRandomSprite()

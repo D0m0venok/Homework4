@@ -1,21 +1,32 @@
 using System;
-using UniRx;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Homework4
 {
     public sealed class CharacterInfo
     {
-        private readonly ReactiveCollection<CharacterStat> _stats = new();
-        public IReadOnlyReactiveCollection<CharacterStat> Stats => _stats;
+        public event Action<CharacterStat> OnStatAdded;
+        public event Action<CharacterStat> OnStatRemoved;
+    
+        private readonly HashSet<CharacterStat> _stats = new();
 
         public void AddStat(CharacterStat stat)
         {
-            _stats.Add(stat);
+            if (_stats.Add(stat))
+            {
+                OnStatAdded?.Invoke(stat);
+            }
         }
+
         public void RemoveStat(CharacterStat stat)
         {
-            _stats.Remove(stat);
+            if (_stats.Remove(stat))
+            {
+                OnStatRemoved?.Invoke(stat);
+            }
         }
+
         public CharacterStat GetStat(string name)
         {
             foreach (var stat in _stats)
@@ -27,6 +38,11 @@ namespace Homework4
             }
 
             throw new Exception($"Stat {name} is not found!");
+        }
+
+        public CharacterStat[] GetStats()
+        {
+            return _stats.ToArray();
         }
     }
 }

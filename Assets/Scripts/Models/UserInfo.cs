@@ -1,29 +1,32 @@
-using UniRx;
+using System;
 using UnityEngine;
 
 namespace Homework4
 {
     public sealed class UserInfo
     {
-        private readonly ReactiveProperty<string> _name = new();
-        private readonly ReactiveProperty<string> _description = new();
-        private readonly ReactiveProperty<Sprite> _icon = new();
+        public event Action<string> OnNameChanged;
+        public event Action<string> OnDescriptionChanged;
+        public event Action<Sprite> OnIconChanged; 
 
-        public IReadOnlyReactiveProperty<string> Name => _name;
-        public IReadOnlyReactiveProperty<string> Description => _description;
-        public IReadOnlyReactiveProperty<Sprite> Icon => _icon;
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public Sprite Icon { get; private set; }
 
         public void ChangeName(string name)
         {
-            _name.Value = name;
+            Name = name;
+            OnNameChanged?.Invoke(name);
         }
         public void ChangeDescription(string description)
         {
-            _description.Value = description;
+            Description = description;
+            OnDescriptionChanged?.Invoke(description);
         }
         public void ChangeIcon(Sprite icon)
         {
-            _icon.Value = icon;
+            Icon = icon;
+            OnIconChanged?.Invoke(icon);
         }
     }
 }

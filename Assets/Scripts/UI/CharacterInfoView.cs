@@ -21,7 +21,7 @@ namespace Homework4
         private ICharacterInfoPresenter _presenter;
         private readonly CompositeDisposable _disposable = new ();
         
-        public void Set(ICharacterInfoPresenter presenter)
+        public void Show(ICharacterInfoPresenter presenter)
         {
             _presenter = presenter;
             

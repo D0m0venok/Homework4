@@ -4,9 +4,11 @@ namespace Homework4
 {
     public interface ICharacterStatPM
     {
-        public string Name { get; }
-        public IReadOnlyReactiveProperty<int> Value { get; }
+        string Name { get; }
+        IReadOnlyReactiveProperty<int> Value { get; }
 
-        public void ChangeValue(int value);
+        void ChangeValue(int value);
+        void Dispose();
+        
     }
 }
